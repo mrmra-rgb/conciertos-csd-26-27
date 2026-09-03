@@ -1067,7 +1067,12 @@
         var map = {};
         qs.docs.forEach(function(d){
           var o = d.data();
-          if (o && o.assignment) map[d.id] = o.assignment;
+          if (o && o.assignmentJson){
+            try { map[d.id] = JSON.parse(o.assignmentJson); } catch (e){ /* documento corrupto: se ignora */ }
+          } else if (o && o.assignment){
+            // compatibilidad por si quedara algún documento antiguo guardado antes de este arreglo
+            map[d.id] = o.assignment;
+          }
         });
         state.customRosters = map;
         refreshScenarioOptions();
@@ -1595,14 +1600,22 @@
     }, function(result){
       state.customRosters[String(n)] = result.assignment;
       if (state.db){
-        state.db.doc("rosters/" + n).set({
-          n: n,
-          assignment: result.assignment,
-          maxRepeat: result.maxRepeat,
-          nRepeatedPairs: result.nRepeatedPairs,
-          totalPairsPossible: result.totalPairsPossible,
-          generatedAt: Date.now()
-        }).catch(function(){ /* queda disponible en este dispositivo aunque falle el guardado en la nube */ });
+        // Firestore real no admite "arrays dentro de arrays" (result.assignment es
+        // una lista de listas), así que se guarda como texto (JSON) y se vuelve a
+        // convertir a lista al leerlo — ver el onSnapshot de "rosters" más abajo.
+        // Todo esto va en un try/catch porque estas comprobaciones de Firestore
+        // pueden lanzar el error de forma síncrona, y un fallo guardando en la nube
+        // nunca debe impedir que el reparto generado se vea y se use en este dispositivo.
+        try {
+          state.db.doc("rosters/" + n).set({
+            n: n,
+            assignmentJson: JSON.stringify(result.assignment),
+            maxRepeat: result.maxRepeat,
+            nRepeatedPairs: result.nRepeatedPairs,
+            totalPairsPossible: result.totalPairsPossible,
+            generatedAt: Date.now()
+          }).catch(function(){ /* queda disponible en este dispositivo aunque falle el guardado en la nube */ });
+        } catch (e){ /* queda disponible en este dispositivo aunque falle el guardado en la nube */ }
       }
       state.scenario = n;
       state.concierto = 1;
