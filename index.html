@@ -646,7 +646,7 @@
       <h2>Reparto completo — para repartir a los alumnos</h2>
       <button class="btn" id="printCompleto" type="button" style="flex:none;">Imprimir</button>
     </div>
-    <p class="scoring-caption">Los puestos únicos (FOH, Monitores, Escenario, Radiofrecuencia, Streaming) los ocupa cada alumno una sola vez en todo el curso. La mesa de mezclas se reparte cada concierto en tantos "escritorios" como haga falta para que ningún grupo pase de 3 personas.</p>
+    <p class="scoring-caption">Cada alumno pasa una sola vez en todo el curso por FOH, Monitores, Escenario, Radiofrecuencia, Streaming, DIGICO y MACKIE. También pasa una vez por una mesa MIDAS (da igual cuál de las 3 le toque) — se reparte cada concierto entre MIDAS 1/2/3 según haga falta para que ninguna pase de 3 personas.</p>
     <div id="completoBody"></div>
   </div>
 </main>
@@ -702,68 +702,35 @@
 (function(){
   "use strict";
 
-  // Los 5 primeros puestos son únicos (un solo equipo real: no se pueden duplicar).
-  // Las mesas de mezclas son consolas reales concretas: se reparten en tantos
-  // escritorios como haga falta para no pasar NUNCA de 3 personas por mesa —
-  // a diferencia de los puestos únicos, que a veces son 4 porque solo existe un
-  // equipo de cada (ver aviso al generar un reparto).
-  var UNIQUE_ROLES = 5;
-  var UNIQUE_NAMES = ["FOH","Monitores","Escenario","Radiofrecuencia","Streaming"];
-  var MESA_NAMES = ["DIGICO","MACKIE","MIDAS 1","MIDAS 2","MIDAS 3"];
-
-  // Solo para los repartos de 26, 27, 28 y 29 alumnos (todos los que tienen las 5
-  // mesas nombradas DIGICO/MACKIE/MIDAS 1/2/3 — con 25 alumnos no existe "MIDAS 3",
-  // así que ese caso se deja sin tocar): intercambio de nombres puramente visual (a
-  // petición expresa) — FOH pasa a llamarse "MIDAS 1" y viceversa (donde antes ponía
-  // MIDAS 1 ahora pone FOH), Monitores↔MIDAS 2 y Radiofrecuencia↔MIDAS 3. DIGICO,
-  // MACKIE, Escenario y Streaming no se tocan. Los grupos, los alumnos y los tamaños
-  // no cambian en absoluto, solo el texto en pantalla.
-  var UNIQUE_NAME_OVERRIDES = {
-    "26": ["MIDAS 1","MIDAS 2","Escenario","MIDAS 3","Streaming"],
-    "27": ["MIDAS 1","MIDAS 2","Escenario","MIDAS 3","Streaming"],
-    "28": ["MIDAS 1","MIDAS 2","Escenario","MIDAS 3","Streaming"],
-    "29": ["MIDAS 1","MIDAS 2","Escenario","MIDAS 3","Streaming"]
-  };
-  var MESA_NAME_OVERRIDES = {
-    "26": ["DIGICO","MACKIE","FOH","Monitores","Radiofrecuencia"],
-    "27": ["DIGICO","MACKIE","FOH","Monitores","Radiofrecuencia"],
-    "28": ["DIGICO","MACKIE","FOH","Monitores","Radiofrecuencia"],
-    "29": ["DIGICO","MACKIE","FOH","Monitores","Radiofrecuencia"]
-  };
-
-  // Mismo alcance que arriba (26-29 alumnos): orden de aparición de las tarjetas en
-  // pantalla (puramente visual, a petición expresa) para que, tras el intercambio
-  // de nombres de arriba, se vean en este orden lógico: FOH, MONITORES, ESCENARIO,
-  // RADIOFRECUENCIA, STREAMING, DIGICO, MACKIE, MIDAS 1, MIDAS 2, MIDAS 3. Los
-  // índices de puesto reales (0-9) no cambian, solo el orden en que se pintan.
-  var PUESTO_ORDER_OVERRIDES = {
-    "26": [7,8,2,9,4,5,6,0,1,3],
-    "27": [7,8,2,9,4,5,6,0,1,3],
-    "28": [7,8,2,9,4,5,6,0,1,3],
-    "29": [7,8,2,9,4,5,6,0,1,3]
-  };
+  // 7 puestos fijos: cada alumno pasa EXACTAMENTE una vez por cada uno en todo el
+  // curso (FOH, Monitores, Escenario, Radiofrecuencia y Streaming porque son un
+  // único equipo real; DIGICO y MACKIE porque son mesas distintas que es
+  // fundamental que aprendan). El 8º puesto base es la "mesa MIDAS": cada alumno
+  // también pasa garantizado una vez por ella en el curso, pero da igual cuál de
+  // las 3 consolas físicas (MIDAS 1/2/3) le toque — se reparten cada concierto
+  // según haga falta para que ninguna pase nunca de 3 personas.
+  var UNIQUE_ROLES = 7;
+  var UNIQUE_NAMES = ["FOH","Monitores","Escenario","Radiofrecuencia","Streaming","DIGICO","MACKIE"];
+  var MESA_NAMES = ["MIDAS 1","MIDAS 2","MIDAS 3"];
 
   function puestoRenderOrder(scenario, totalPuestos){
-    var override = PUESTO_ORDER_OVERRIDES[String(scenario)];
-    if (override && override.length === totalPuestos) return override;
     var order = [];
     for (var i = 0; i < totalPuestos; i++) order.push(i);
     return order;
   }
 
+  // No forzamos un número fijo de consolas MIDAS: solo se añade una segunda (o
+  // tercera) cuando el grupo de ese concierto no cabe a ≤3 por consola — así un
+  // grupo de 3-4 alumnos se queda en 1 o 2 consolas con 2-3 personas cada una, en
+  // vez de repartirse forzosamente entre las 3 y quedar 1 persona sola en cada una.
   function mesaDeskCount(scenario){
-    return scenario >= 26 ? 5 : 4;
+    return 1;
   }
 
   function puestoName(scenario, puesto){
-    if (puesto < UNIQUE_ROLES){
-      var overrides = UNIQUE_NAME_OVERRIDES[String(scenario)];
-      return overrides ? overrides[puesto] : UNIQUE_NAMES[puesto];
-    }
+    if (puesto < UNIQUE_ROLES) return UNIQUE_NAMES[puesto];
     var mi = puesto - UNIQUE_ROLES;
-    var mesaOverrides = MESA_NAME_OVERRIDES[String(scenario)];
-    if (mesaOverrides && mesaOverrides[mi] !== undefined) return mesaOverrides[mi];
-    return MESA_NAMES[mi] || ("Mesa de mezclas " + (mi + 1));
+    return MESA_NAMES[mi] || ("Mesa MIDAS " + (mi + 1));
   }
 
   // Reparte el pool de mesa en exactamente `minDesks` escritorios nombrados, tan
@@ -787,22 +754,23 @@
 
   // Con 27, 28, 29... alumnos, el "hueco extra" de 4 personas cae, por pura aritmética,
   // en r de los 8 conciertos para CADA uno de los 8 puestos (r = alumnos mod 8) — eso no
-  // se puede evitar. Pero SÍ podemos elegir, de los 8 índices de la rejilla base, cuáles 5
-  // llamamos "puestos únicos" (FOH, Monitores...) y cuáles 3 son "mesa" (que absorbe su
-  // sobrecarga repartiéndose en más escritorios). Probamos las 56 combinaciones posibles
-  // y nos quedamos con la que menos conciertos deja con dos o más puestos únicos a la vez
-  // en 4 — es un cálculo instantáneo y no toca el reparto en sí, solo qué llamamos "mesa".
-  function combinations5of8(){
+  // se puede evitar. Pero SÍ podemos elegir, de los 8 índices de la rejilla base, cuáles 7
+  // llamamos "fijos" (FOH, Monitores, Escenario, Radiofrecuencia, Streaming, DIGICO,
+  // MACKIE) y cuál 1 es la "mesa MIDAS" (que absorbe su sobrecarga repartiéndose entre
+  // las 3 consolas físicas). Probamos las 8 combinaciones posibles y nos quedamos con la
+  // que menos conciertos deja con dos o más puestos fijos a la vez en 4 — es un cálculo
+  // instantáneo y no toca el reparto en sí, solo qué llamamos "mesa".
+  function combinationsKof8(k){
     var res = [];
     var arr = [0,1,2,3,4,5,6,7];
     function rec(start, chosen){
-      if (chosen.length === 5){ res.push(chosen.slice()); return; }
+      if (chosen.length === k){ res.push(chosen.slice()); return; }
       for (var i = start; i < arr.length; i++){ chosen.push(arr[i]); rec(i + 1, chosen); chosen.pop(); }
     }
     rec(0, []);
     return res;
   }
-  var COMBOS_5_OF_8 = combinations5of8();
+  var COMBOS_UNIQUE_OF_8 = combinationsKof8(UNIQUE_ROLES);
 
   function bigRoundsPerIndex(assign, N){
     var q = Math.floor(N / 8);
@@ -818,7 +786,7 @@
   function bestUniqueLabeling(assign, N){
     var bigRounds = bigRoundsPerIndex(assign, N);
     var best = null;
-    COMBOS_5_OF_8.forEach(function(combo){
+    COMBOS_UNIQUE_OF_8.forEach(function(combo){
       var load = [0,0,0,0,0,0,0,0];
       combo.forEach(function(idx){ bigRounds[idx].forEach(function(rd){ load[rd]++; }); });
       var max = Math.max.apply(null, load);
@@ -834,7 +802,8 @@
     if (!assign){
       // Sin datos todavía (p.ej. un reparto que aún no ha llegado de la nube) — no se
       // cachea, para recalcular en cuanto el reparto esté disponible.
-      return { uniqueIndices: [0,1,2,3,4], mesaIndices: [5,6,7], maxOverlap: null };
+      var allIdx = [0,1,2,3,4,5,6,7];
+      return { uniqueIndices: allIdx.slice(0, UNIQUE_ROLES), mesaIndices: allIdx.slice(UNIQUE_ROLES), maxOverlap: null };
     }
     var best = bestUniqueLabeling(assign, assign.length);
     var uniqueSet = {};
@@ -848,7 +817,8 @@
   function roundGroups(scenario, concierto){
     var assign = getAssignment(scenario);
     var labeling = getLabeling(scenario);
-    var unique = [[],[],[],[],[]];
+    var unique = [];
+    for (var u = 0; u < UNIQUE_ROLES; u++) unique.push([]);
     var mesaPool = [];
     if (assign){
       var uniquePos = {};
@@ -1723,20 +1693,21 @@
       var q = Math.floor(n / 8), r = n % 8;
       var labeling = getLabeling(n);
       var uniqueNote;
+      var fixedList = UNIQUE_NAMES.join(", ");
       if (q >= 4){
-        uniqueNote = "Aviso: con " + n + " alumnos, los puestos únicos (FOH, Monitores, Escenario, Radiofrecuencia, Streaming) tendrán " +
+        uniqueNote = "Aviso: con " + n + " alumnos, los puestos fijos (" + fixedList + ") tendrán " +
           q + (r > 0 ? (" o " + (q + 1)) : "") + " personas en cada concierto — al ser un solo equipo, no se pueden repartir en más de un grupo.";
       } else if (labeling.maxOverlap > 1){
-        uniqueNote = "Los puestos únicos (FOH, Monitores, Escenario, Radiofrecuencia, Streaming) tendrán 4 personas en " + r +
-          " de los 8 conciertos, y en algún concierto coincidirán " + labeling.maxOverlap + " puestos únicos a la vez en 4 " +
+        uniqueNote = "Los puestos fijos (" + fixedList + ") tendrán 4 personas en " + r +
+          " de los 8 conciertos, y en algún concierto coincidirán " + labeling.maxOverlap + " puestos fijos a la vez en 4 " +
           "(es el mínimo posible: al ser equipos únicos no se pueden repartir en más grupos).";
       } else if (r > 0){
-        uniqueNote = "Los puestos únicos (FOH, Monitores, Escenario, Radiofrecuencia, Streaming) tendrán 4 personas en " + r +
+        uniqueNote = "Los puestos fijos (" + fixedList + ") tendrán 4 personas en " + r +
           " de los 8 conciertos, nunca más de uno a la vez.";
       } else {
-        uniqueNote = "Con este número exacto, los puestos únicos tienen siempre " + q + " personas, sin sobresaltos.";
+        uniqueNote = "Con este número exacto, los puestos fijos tienen siempre " + q + " personas, sin sobresaltos.";
       }
-      var sizeNote = " Las mesas de mezclas nunca pasan de 3 personas (se reparten en tantos escritorios como haga falta). " + uniqueNote;
+      var sizeNote = " La mesa MIDAS nunca pasa de 3 personas en cada consola (se reparte entre MIDAS 1/2/3 según haga falta). " + uniqueNote;
       var savedNote = state.db ? "" : " (guardado solo en este dispositivo — sin conexión de guardado)";
       toast(
         "Reparto para " + n + " alumnos listo — " + result.nRepeatedPairs + " parejas repetidas de " +
