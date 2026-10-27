@@ -844,7 +844,7 @@
     return groups.mesaDesks[puesto - UNIQUE_ROLES] || [];
   }
 
-  var ASSIGNMENTS = {"25": [[7, 2, 1, 0, 3, 5, 6, 4], [6, 0, 5, 7, 2, 3, 4, 1], [0, 4, 2, 7, 1, 6, 5, 3], [4, 1, 0, 5, 2, 3, 6, 7], [5, 6, 4, 0, 1, 7, 3, 2], [2, 6, 1, 3, 7, 0, 4, 5], [1, 5, 6, 2, 0, 7, 4, 3], [0, 3, 6, 5, 7, 4, 2, 1], [2, 3, 4, 6, 0, 5, 7, 1], [3, 0, 7, 6, 5, 1, 2, 4], [6, 2, 3, 1, 0, 4, 5, 7], [7, 3, 0, 1, 4, 6, 2, 5], [7, 0, 4, 5, 6, 2, 1, 3], [4, 7, 1, 2, 5, 6, 3, 0], [6, 5, 2, 3, 4, 1, 7, 0], [3, 7, 0, 4, 1, 2, 5, 6], [1, 4, 5, 3, 6, 7, 2, 0], [3, 1, 6, 7, 4, 5, 0, 2], [0, 7, 3, 4, 2, 1, 6, 5], [5, 6, 7, 4, 3, 2, 0, 1], [1, 2, 7, 5, 4, 0, 3, 6], [4, 5, 3, 6, 7, 0, 1, 2], [2, 4, 6, 0, 5, 3, 1, 7], [0, 1, 5, 2, 3, 4, 7, 6], [5, 7, 2, 1, 6, 3, 0, 4]], "26": [[3, 6, 0, 2, 5, 1, 7, 4], [0, 1, 4, 5, 6, 3, 7, 2], [6, 0, 1, 7, 2, 3, 5, 4], [4, 5, 6, 1, 7, 3, 2, 0], [0, 4, 3, 6, 2, 7, 1, 5], [5, 7, 3, 4, 0, 1, 2, 6], [5, 3, 0, 6, 7, 4, 1, 2], [3, 1, 7, 0, 2, 5, 4, 6], [7, 0, 5, 2, 6, 3, 4, 1], [3, 4, 6, 5, 1, 2, 0, 7], [6, 0, 7, 5, 3, 4, 2, 1], [1, 2, 3, 5, 7, 6, 4, 0], [2, 3, 6, 0, 4, 7, 5, 1], [0, 2, 5, 7, 1, 4, 3, 6], [1, 2, 4, 6, 3, 0, 5, 7], [4, 3, 7, 2, 1, 0, 6, 5], [1, 0, 6, 4, 5, 7, 3, 2], [1, 5, 0, 7, 4, 2, 6, 3], [2, 4, 5, 1, 0, 6, 7, 3], [7, 1, 2, 3, 5, 4, 6, 0], [7, 6, 1, 4, 3, 5, 0, 2], [0, 7, 1, 3, 4, 6, 2, 5], [6, 7, 4, 0, 5, 2, 1, 3], [5, 6, 2, 1, 4, 0, 3, 7], [4, 7, 2, 6, 0, 5, 3, 1], [2, 5, 7, 3, 6, 1, 0, 4]], "27": [[3, 2, 0, 6, 4, 7, 1, 5], [6, 2, 4, 0, 7, 5, 3, 1], [2, 5, 7, 0, 3, 4, 1, 6], [2, 6, 0, 5, 7, 1, 4, 3], [4, 6, 2, 3, 1, 7, 5, 0], [1, 7, 5, 2, 4, 0, 3, 6], [5, 7, 3, 0, 4, 1, 6, 2], [3, 4, 7, 5, 0, 6, 2, 1], [4, 0, 6, 2, 3, 1, 7, 5], [0, 6, 1, 7, 5, 4, 3, 2], [0, 1, 3, 2, 7, 6, 5, 4], [6, 1, 2, 5, 4, 3, 0, 7], [0, 7, 2, 6, 3, 5, 4, 1], [0, 3, 4, 7, 1, 2, 6, 5], [1, 3, 0, 4, 5, 6, 2, 7], [7, 0, 5, 6, 1, 4, 2, 3], [5, 1, 6, 4, 0, 2, 3, 7], [7, 4, 3, 5, 6, 2, 1, 0], [4, 2, 7, 1, 5, 0, 6, 3], [7, 5, 6, 1, 0, 3, 4, 2], [1, 4, 6, 7, 2, 5, 0, 3], [2, 3, 5, 4, 6, 7, 0, 1], [5, 0, 1, 7, 6, 3, 2, 4], [1, 0, 7, 3, 6, 5, 4, 2], [6, 5, 1, 3, 2, 0, 7, 4], [3, 7, 0, 1, 2, 4, 5, 6], [2, 1, 4, 6, 5, 3, 7, 0]], "28": [[7, 6, 2, 4, 1, 5, 3, 0], [3, 5, 6, 7, 4, 1, 0, 2], [1, 7, 2, 3, 6, 4, 0, 5], [5, 2, 7, 0, 4, 6, 3, 1], [0, 7, 5, 4, 2, 6, 1, 3], [6, 0, 4, 1, 7, 2, 3, 5], [5, 1, 2, 7, 6, 0, 4, 3], [0, 4, 1, 5, 6, 7, 3, 2], [0, 2, 4, 5, 3, 1, 6, 7], [2, 7, 0, 5, 1, 3, 4, 6], [7, 3, 1, 0, 4, 2, 5, 6], [4, 0, 1, 7, 3, 6, 5, 2], [1, 6, 3, 0, 5, 7, 4, 2], [4, 2, 6, 1, 7, 3, 5, 0], [3, 1, 0, 5, 7, 6, 2, 4], [3, 5, 4, 6, 2, 7, 1, 0], [4, 3, 0, 2, 6, 5, 1, 7], [1, 0, 5, 6, 4, 3, 2, 7], [6, 1, 3, 0, 2, 5, 7, 4], [7, 1, 6, 2, 0, 3, 4, 5], [2, 4, 3, 6, 7, 5, 0, 1], [6, 3, 5, 7, 0, 4, 2, 1], [1, 5, 7, 4, 3, 0, 2, 6], [5, 2, 0, 6, 1, 4, 7, 3], [0, 4, 6, 3, 5, 2, 7, 1], [2, 0, 7, 1, 5, 4, 6, 3], [2, 6, 7, 3, 0, 1, 5, 4], [3, 7, 1, 2, 5, 0, 6, 4]]};
+  var ASSIGNMENTS = {"25": [[7, 2, 1, 0, 3, 5, 6, 4], [6, 0, 5, 7, 2, 3, 4, 1], [0, 4, 2, 7, 1, 6, 5, 3], [4, 1, 0, 5, 2, 3, 6, 7], [5, 6, 4, 0, 1, 7, 3, 2], [2, 6, 1, 3, 7, 0, 4, 5], [1, 5, 6, 2, 0, 7, 4, 3], [0, 3, 6, 5, 7, 4, 2, 1], [2, 3, 4, 6, 0, 5, 7, 1], [3, 0, 7, 6, 5, 1, 2, 4], [6, 2, 3, 1, 0, 4, 5, 7], [7, 3, 0, 1, 4, 6, 2, 5], [7, 0, 4, 5, 6, 2, 1, 3], [4, 7, 1, 2, 5, 6, 3, 0], [6, 5, 2, 3, 4, 1, 7, 0], [3, 7, 0, 4, 1, 2, 5, 6], [1, 4, 5, 3, 6, 7, 2, 0], [3, 1, 6, 7, 4, 5, 0, 2], [0, 7, 3, 4, 2, 1, 6, 5], [5, 6, 7, 4, 3, 2, 0, 1], [1, 2, 7, 5, 4, 0, 3, 6], [4, 5, 3, 6, 7, 0, 1, 2], [2, 4, 6, 0, 5, 3, 1, 7], [0, 1, 5, 2, 3, 4, 7, 6], [5, 7, 2, 1, 6, 3, 0, 4]], "26": [[3, 6, 0, 2, 5, 1, 7, 4], [0, 1, 4, 5, 6, 3, 7, 2], [6, 0, 1, 7, 2, 3, 5, 4], [4, 5, 6, 1, 7, 3, 2, 0], [0, 4, 3, 6, 2, 7, 1, 5], [5, 7, 3, 4, 0, 1, 2, 6], [5, 3, 0, 6, 7, 4, 1, 2], [3, 1, 7, 0, 2, 5, 4, 6], [7, 0, 5, 2, 6, 3, 4, 1], [3, 4, 6, 5, 1, 2, 0, 7], [6, 0, 7, 5, 3, 4, 2, 1], [1, 2, 3, 5, 7, 6, 4, 0], [2, 3, 6, 0, 4, 7, 5, 1], [0, 2, 5, 7, 1, 4, 3, 6], [1, 2, 4, 6, 3, 0, 5, 7], [4, 3, 7, 2, 1, 0, 6, 5], [1, 0, 6, 4, 5, 7, 3, 2], [1, 5, 0, 7, 4, 2, 6, 3], [2, 4, 5, 1, 0, 6, 7, 3], [7, 1, 2, 3, 5, 4, 6, 0], [7, 6, 1, 4, 3, 5, 0, 2], [0, 7, 1, 3, 4, 6, 2, 5], [6, 7, 4, 0, 5, 2, 1, 3], [5, 6, 2, 1, 4, 0, 3, 7], [4, 7, 2, 6, 0, 5, 3, 1], [2, 5, 7, 3, 6, 1, 0, 4]], "27": [[5, 0, 2, 6, 1, 7, 3, 4], [6, 4, 3, 1, 2, 0, 7, 5], [3, 5, 7, 4, 1, 2, 0, 6], [2, 0, 6, 5, 7, 1, 4, 3], [5, 6, 3, 7, 0, 4, 2, 1], [3, 2, 4, 0, 5, 7, 6, 1], [1, 5, 2, 0, 4, 6, 7, 3], [6, 3, 5, 0, 7, 2, 1, 4], [2, 3, 0, 1, 7, 4, 5, 6], [1, 3, 6, 4, 5, 7, 2, 0], [4, 0, 5, 1, 3, 6, 2, 7], [4, 3, 1, 7, 6, 5, 0, 2], [1, 7, 4, 6, 0, 2, 5, 3], [6, 2, 0, 3, 1, 5, 4, 7], [7, 6, 5, 2, 4, 0, 3, 1], [5, 7, 0, 4, 3, 1, 6, 2], [2, 4, 7, 6, 3, 5, 1, 0], [6, 1, 7, 2, 5, 4, 0, 3], [7, 5, 1, 3, 2, 4, 6, 0], [0, 4, 2, 3, 5, 1, 7, 6], [0, 1, 3, 5, 4, 2, 6, 7], [2, 7, 1, 4, 0, 6, 3, 5], [4, 7, 3, 2, 6, 1, 5, 0], [7, 4, 6, 0, 1, 3, 5, 2], [1, 6, 0, 5, 2, 3, 7, 4], [3, 1, 5, 6, 7, 0, 4, 2], [0, 2, 4, 7, 6, 3, 1, 5]], "28": [[7, 6, 2, 4, 1, 5, 3, 0], [3, 5, 6, 7, 4, 1, 0, 2], [1, 7, 2, 3, 6, 4, 0, 5], [5, 2, 7, 0, 4, 6, 3, 1], [0, 7, 5, 4, 2, 6, 1, 3], [6, 0, 4, 1, 7, 2, 3, 5], [5, 1, 2, 7, 6, 0, 4, 3], [0, 4, 1, 5, 6, 7, 3, 2], [0, 2, 4, 5, 3, 1, 6, 7], [2, 7, 0, 5, 1, 3, 4, 6], [7, 3, 1, 0, 4, 2, 5, 6], [4, 0, 1, 7, 3, 6, 5, 2], [1, 6, 3, 0, 5, 7, 4, 2], [4, 2, 6, 1, 7, 3, 5, 0], [3, 1, 0, 5, 7, 6, 2, 4], [3, 5, 4, 6, 2, 7, 1, 0], [4, 3, 0, 2, 6, 5, 1, 7], [1, 0, 5, 6, 4, 3, 2, 7], [6, 1, 3, 0, 2, 5, 7, 4], [7, 1, 6, 2, 0, 3, 4, 5], [2, 4, 3, 6, 7, 5, 0, 1], [6, 3, 5, 7, 0, 4, 2, 1], [1, 5, 7, 4, 3, 0, 2, 6], [5, 2, 0, 6, 1, 4, 7, 3], [0, 4, 6, 3, 5, 2, 7, 1], [2, 0, 7, 1, 5, 4, 6, 3], [2, 6, 7, 3, 0, 1, 5, 4], [3, 7, 1, 2, 5, 0, 6, 4]]};
 
   var CAT = {
     grave: ["Abandonó el puesto","Fallo técnico no detectado a tiempo","Feedback / clipping severo","Fallo de coordinación con otro puesto","Riesgo de seguridad","Otro fallo grave"],
@@ -900,21 +900,42 @@
     return st;
   }
 
-  function roundPairKeys(buckets){
+  // Índice base (0-7) que la app pinta como mesa MIDAS para este reparto (el que
+  // queda fuera de los 7 puestos fijos — ver getLabeling).
+  function midasIndexFor(assignment, N){
+    var best = bestUniqueLabeling(assignment, N);
+    for (var k = 0; k < 8; k++) if (best.combo.indexOf(k) === -1) return k;
+    return 7;
+  }
+
+  // Parejas que comparten grupo REAL en un concierto: cada puesto fijo es un grupo,
+  // y la mesa MIDAS se parte en consolas exactamente igual que en pantalla.
+  function roundPairKeys(assignment, N, rd, midasIdx){
+    var buckets = bucketRound(assignment, N, rd);
     var keys = [];
     for (var k = 0; k < 8; k++){
-      var m = buckets[k];
-      for (var a = 0; a < m.length; a++){
-        for (var b = a + 1; b < m.length; b++) keys.push(pairKey(m[a], m[b]));
+      var groups = (k === midasIdx) ? splitIntoDesks(buckets[k], mesaDeskCount(N)) : [buckets[k]];
+      for (var g = 0; g < groups.length; g++){
+        var m = groups[g];
+        for (var a = 0; a < m.length; a++){
+          for (var b = a + 1; b < m.length; b++) keys.push(pairKey(m[a], m[b]));
+        }
       }
     }
     return keys;
   }
 
+  // Coste de que una pareja coincida v veces: 0 si coincide 0-1 vez, 1 si coincide
+  // 2 veces y mucho más a partir de 3 (preferimos varias parejas que repiten una
+  // vez antes que una sola pareja que se junte 3 veces).
+  function pairPenalty(v){
+    return v <= 1 ? 0 : (v === 2 ? 1 : 10 * (v - 1));
+  }
+
   function adjustPair(co, key, delta, costRef){
     var oldV = co.get(key) || 0;
     var newV = oldV + delta;
-    costRef.cost += Math.max(0, newV - 1) - Math.max(0, oldV - 1);
+    costRef.cost += pairPenalty(newV) - pairPenalty(oldV);
     if (newV <= 0) co.delete(key); else co.set(key, newV);
   }
 
@@ -923,66 +944,80 @@
   }
 
   function computeGroupsAndCost(assignment, N){
+    var midasIdx = midasIndexFor(assignment, N);
     var co = new Map();
     var costRef = { cost: 0 };
     for (var rd = 0; rd < 8; rd++){
-      var keys = roundPairKeys(bucketRound(assignment, N, rd));
-      applyPairKeys(co, keys, 1, costRef);
+      applyPairKeys(co, roundPairKeys(assignment, N, rd, midasIdx), 1, costRef);
     }
     var maxRepeat = 0, nRepeated = 0;
     co.forEach(function(v){ if (v > maxRepeat) maxRepeat = v; if (v > 1) nRepeated++; });
     return { co: co, cost: costRef.cost, maxRepeat: maxRepeat, nRepeated: nRepeated };
   }
 
-  function tryIntercalate(assignment, N, rng){
+  // Un movimiento intercambia, para un alumno, sus puestos de dos conciertos (así
+  // sigue pasando una vez por cada puesto). Si eso desequilibra los tamaños de
+  // grupo, se compensa con un segundo alumno que haga el intercambio contrario.
+  function applyMove(assignment, move, cnt){
+    var who = move.j >= 0 ? [move.i, move.j] : [move.i];
+    for (var w = 0; w < who.length; w++){
+      var s = who[w];
+      cnt[move.rd1][assignment[s][move.rd1]]--; cnt[move.rd2][assignment[s][move.rd2]]--;
+      var t = assignment[s][move.rd1]; assignment[s][move.rd1] = assignment[s][move.rd2]; assignment[s][move.rd2] = t;
+      cnt[move.rd1][assignment[s][move.rd1]]++; cnt[move.rd2][assignment[s][move.rd2]]++;
+    }
+  }
+
+  function pickMove(assignment, N, cnt, q, rng){
     var i = Math.floor(rng() * N);
-    var j = Math.floor(rng() * N);
-    if (i === j) return null;
     var rd1 = Math.floor(rng() * 8);
     var rd2 = Math.floor(rng() * 8);
     if (rd1 === rd2) return null;
-    var ai1 = assignment[i][rd1], ai2 = assignment[i][rd2];
-    var aj1 = assignment[j][rd1], aj2 = assignment[j][rd2];
-    if (ai1 === aj2 && ai2 === aj1 && ai1 !== aj1) return { i: i, j: j, rd1: rd1, rd2: rd2 };
-    return null;
-  }
-
-  function applySwapAssignment(assignment, move){
-    var i = move.i, j = move.j, rd1 = move.rd1, rd2 = move.rd2;
-    var t1 = assignment[i][rd1]; assignment[i][rd1] = assignment[i][rd2]; assignment[i][rd2] = t1;
-    var t2 = assignment[j][rd1]; assignment[j][rd1] = assignment[j][rd2]; assignment[j][rd2] = t2;
+    var x = assignment[i][rd1], y = assignment[i][rd2];
+    // Solo, si los grupos siguen teniendo q o q+1 personas en ambos conciertos.
+    var single = cnt[rd1][x] === q + 1 && cnt[rd2][x] === q && cnt[rd2][y] === q + 1 && cnt[rd1][y] === q;
+    if (single && rng() < 0.5) return { i: i, j: -1, rd1: rd1, rd2: rd2 };
+    var cand = [];
+    for (var j = 0; j < N; j++){
+      if (j !== i && assignment[j][rd1] === y && assignment[j][rd2] === x) cand.push(j);
+    }
+    if (cand.length) return { i: i, j: cand[Math.floor(rng() * cand.length)], rd1: rd1, rd2: rd2 };
+    return single ? { i: i, j: -1, rd1: rd1, rd2: rd2 } : null;
   }
 
   function optimizeAssignment(assignment, N, iterations, rng){
+    var midasIdx = midasIndexFor(assignment, N);
+    var q = Math.floor(N / 8);
+    var cnt = [];
+    for (var r0 = 0; r0 < 8; r0++) cnt.push([0,0,0,0,0,0,0,0]);
+    for (var s0 = 0; s0 < N; s0++) for (var r1 = 0; r1 < 8; r1++) cnt[r1][assignment[s0][r1]]++;
     var init = computeGroupsAndCost(assignment, N);
     var co = init.co;
     var costRef = { cost: init.cost };
     var bestAssignment = cloneAssignment(assignment);
     var bestCost = init.cost;
-    var T0 = 2.0, T1 = 0.01;
+    var T0 = 1.5, T1 = 0.02;
     for (var it = 0; it < iterations; it++){
-      var T = T0 * Math.pow(T1 / T0, it / iterations);
-      var move = tryIntercalate(assignment, N, rng);
+      var move = pickMove(assignment, N, cnt, q, rng);
       if (!move) continue;
-      var beforeKeys1 = roundPairKeys(bucketRound(assignment, N, move.rd1));
-      var beforeKeys2 = roundPairKeys(bucketRound(assignment, N, move.rd2));
+      var T = T0 * Math.pow(T1 / T0, it / iterations);
+      var beforeKeys1 = roundPairKeys(assignment, N, move.rd1, midasIdx);
+      var beforeKeys2 = roundPairKeys(assignment, N, move.rd2, midasIdx);
       var oldCost = costRef.cost;
       applyPairKeys(co, beforeKeys1, -1, costRef);
       applyPairKeys(co, beforeKeys2, -1, costRef);
-      applySwapAssignment(assignment, move);
-      var afterKeys1 = roundPairKeys(bucketRound(assignment, N, move.rd1));
-      var afterKeys2 = roundPairKeys(bucketRound(assignment, N, move.rd2));
+      applyMove(assignment, move, cnt);
+      var afterKeys1 = roundPairKeys(assignment, N, move.rd1, midasIdx);
+      var afterKeys2 = roundPairKeys(assignment, N, move.rd2, midasIdx);
       applyPairKeys(co, afterKeys1, 1, costRef);
       applyPairKeys(co, afterKeys2, 1, costRef);
-      var newCost = costRef.cost;
-      var delta = newCost - oldCost;
-      var accept = delta <= 0 || rng() < Math.exp(-delta / Math.max(T, 1e-6));
-      if (accept){
-        if (newCost < bestCost){ bestCost = newCost; bestAssignment = cloneAssignment(assignment); }
+      var delta = costRef.cost - oldCost;
+      if (delta <= 0 || rng() < Math.exp(-delta / Math.max(T, 1e-6))){
+        if (costRef.cost < bestCost){ bestCost = costRef.cost; bestAssignment = cloneAssignment(assignment); }
       } else {
         applyPairKeys(co, afterKeys1, -1, costRef);
         applyPairKeys(co, afterKeys2, -1, costRef);
-        applySwapAssignment(assignment, move);
+        applyMove(assignment, move, cnt);
         applyPairKeys(co, beforeKeys1, 1, costRef);
         applyPairKeys(co, beforeKeys2, 1, costRef);
       }
@@ -992,10 +1027,10 @@
 
   // Runs several restarts, yielding to the browser between each so the UI stays responsive.
   function generateRosterAsync(N, onProgress, onDone){
-    var RESTARTS, ITER;
-    if (N <= 32){ RESTARTS = 20; ITER = Math.max(60000, Math.min(300000, N * 8000)); }
-    else if (N <= 48){ RESTARTS = 14; ITER = Math.min(300000, N * 6000); }
-    else { RESTARTS = 10; ITER = Math.min(250000, N * 4000); }
+    // Cada ronda tarda unos 2-4 segundos en cualquier ordenador normal; con 6 rondas el
+    // reparto sale en menos de medio minuto y nos quedamos con la mejor.
+    var RESTARTS = 6;
+    var ITER = Math.max(30000, Math.min(400000, Math.round(2.2e8 / (N * N))));
     var best = null;
     var r = 0;
     function step(){
@@ -1580,7 +1615,21 @@
   document.getElementById("tabVivo").addEventListener("click", function(){ activateTab("vivo"); });
   document.getElementById("tabHist").addEventListener("click", function(){ activateTab("hist"); });
   document.getElementById("tabCompleto").addEventListener("click", function(){ activateTab("completo"); });
-  document.getElementById("printCompleto").addEventListener("click", function(){ window.print(); });
+  // Algunos navegadores (o el panel de navegador de la app de Claude) ignoran en
+  // silencio la orden de imprimir. Si en 1,5 s no ha empezado la impresión, se
+  // avisa de cómo hacerlo a mano en vez de no hacer nada.
+  document.getElementById("printCompleto").addEventListener("click", function(){
+    var started = false;
+    function onBeforePrint(){ started = true; }
+    window.addEventListener("beforeprint", onBeforePrint);
+    try { window.print(); } catch (e) {}
+    setTimeout(function(){
+      window.removeEventListener("beforeprint", onBeforePrint);
+      if (!started){
+        toast("El navegador no ha abierto la impresión. Pulsa Cmd+P (Mac) o Ctrl+P (Windows) — sale igual, sin los botones de arriba.", 8000);
+      }
+    }, 1500);
+  });
 
   // ---------- Names panel ----------
   document.getElementById("namesToggle").addEventListener("click", function(){
